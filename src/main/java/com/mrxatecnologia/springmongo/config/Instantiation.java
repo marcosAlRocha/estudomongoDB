@@ -3,6 +3,7 @@ package com.mrxatecnologia.springmongo.config;
 import com.mrxatecnologia.springmongo.domain.Post;
 import com.mrxatecnologia.springmongo.domain.User;
 import com.mrxatecnologia.springmongo.dto.AuthorDTO;
+import com.mrxatecnologia.springmongo.dto.CommentDTO;
 import com.mrxatecnologia.springmongo.repository.PostRepository;
 import com.mrxatecnologia.springmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,14 @@ public class Instantiation implements CommandLineRunner {
         Post post1 = new Post(null, sdf.parse("31/03/2018"), "Partiu viagem","Viajando para São Paulo", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("01/04/2018"), "boa ","só vai", new AuthorDTO(maria));
 
-        postRepository.saveAll(Arrays.asList(post1, post2));
+        CommentDTO c1 = new CommentDTO("Boa viagem", sdf.parse("21/06/208"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite o dia", sdf.parse("22/06/208"), new AuthorDTO(bob));
+        CommentDTO c3 = new CommentDTO("Bom fds", sdf.parse("23/06/208"), new AuthorDTO(alex));
 
+        post1.getComments().addAll(Arrays.asList(c1,c2));
+        post2.getComments().addAll(Arrays.asList(c3));
+
+        postRepository.saveAll(Arrays.asList(post1, post2));
 
         maria.getPosts().addAll(Arrays.asList(post1, post2));
         userRepository.save(maria);
