@@ -2,6 +2,7 @@ package com.mrxatecnologia.springmongo.config;
 
 import com.mrxatecnologia.springmongo.domain.Post;
 import com.mrxatecnologia.springmongo.domain.User;
+import com.mrxatecnologia.springmongo.dto.AuthorDTO;
 import com.mrxatecnologia.springmongo.repository.PostRepository;
 import com.mrxatecnologia.springmongo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,11 @@ public class Instantiation implements CommandLineRunner {
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
-
-        Post post1 = new Post(null, sdf.parse("31/03/2018"), "Partiu viagem","Viajando para São Paulo", maria);
-        Post post2 = new Post(null, sdf.parse("01/04/2018"), "boa ","só vai", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("31/03/2018"), "Partiu viagem","Viajando para São Paulo", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("01/04/2018"), "boa ","só vai", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
