@@ -1,5 +1,6 @@
 package com.mrxatecnologia.springmongo.resources;
 
+import com.mrxatecnologia.springmongo.domain.Post;
 import com.mrxatecnologia.springmongo.domain.User;
 import com.mrxatecnologia.springmongo.dto.UserDTO;
 import com.mrxatecnologia.springmongo.services.UserService;
@@ -51,6 +52,13 @@ public class UserResource {
         User user = userService.fromDTO(userDto);
         user.setId(id);
         user = userService.update(user);
-        return ResponseEntity.noContent().build();    }
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value="/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
+    }
 
 }
